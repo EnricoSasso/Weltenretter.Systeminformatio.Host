@@ -8,7 +8,6 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents().AddHubOpt
 builder.Services.AddControllers();
 builder.Services.AddRadzenComponents();
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<Weltenretter.Systeminformationen.Host.z_Systeminformationen_HostService>();
 builder.Services.AddDbContext<Weltenretter.Systeminformationen.Host.Data.z_Systeminformationen_HostContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
