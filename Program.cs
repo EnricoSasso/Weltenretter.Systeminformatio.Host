@@ -13,6 +13,7 @@ builder.Services.AddDbContext<Weltenretter.Systeminformationen.Host.Data.z_Syste
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     options.UseSqlServer(builder.Configuration.GetConnectionString("z_Systeminformationen_HostConnection"));
 });
+builder.Services.AddScoped<Weltenretter.Systeminformationen.Host.z_Systeminformationen_HostService>();
 var app = builder.Build();
 var forwardingOptions = new ForwardedHeadersOptions()
 {

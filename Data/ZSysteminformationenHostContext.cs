@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Weltenretter.Systeminformationen.Host.Models.z_Systeminformationen_Host;
 
 namespace Weltenretter.Systeminformationen.Host.Data
 {
@@ -20,6 +24,7 @@ namespace Weltenretter.Systeminformationen.Host.Data
             this.OnModelBuilding(builder);
         }
 
+        public DbSet<Weltenretter.Systeminformationen.Host.Models.z_Systeminformationen_Host.Personen> Personen { get; set; }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.Conventions.Add(_ => new BlankTriggerAddingConvention());
