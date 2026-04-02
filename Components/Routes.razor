@@ -1,5 +1,7 @@
+@using System.Reflection
 @using Weltenretter.Systeminformationen.Host.Components.Pages
-<Router AppAssembly="@typeof(Program).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="@AdditionalAssemblies">
+
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
@@ -7,3 +9,10 @@
         <NotFound />
     </NotFound>
 </Router>
+
+@code {
+    private static readonly Assembly[] AdditionalAssemblies =
+    {
+        typeof(Weltenretter.Systeminformationen.Components.Pages.Component1).Assembly
+    };
+}
