@@ -1,6 +1,7 @@
 using Radzen;
 using Weltenretter.Systeminformationen.Data;
 using Weltenretter.Systeminformationen.Host.Components;
+using Weltenretter.Systeminformationen.Host.Hubs;
 using Weltenretter.Systeminformationen.Host.Services.Systeminformationen;
 using Weltenretter.Systeminformationen.Models;
 using Weltenretter.Systeminformationen.Services;
@@ -12,6 +13,7 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents().AddHubOpt
 builder.Services.AddControllers();
 builder.Services.AddRadzenComponents();
 builder.Services.AddHttpClient();
+builder.Services.AddSignalR();
 builder.Services.AddDbContext<Weltenretter.Systeminformationen.Host.Data.z_Systeminformationen_HostContext>(options =>
 {
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
@@ -24,7 +26,7 @@ builder.Services.Configure<SysteminformationenOptionen>(
     builder.Configuration.GetSection("Systeminformationen"));
 
 // DbContext des Moduls registrieren
-builder.Services.AddDbContext<SysteminformationenDbContext>(options =>
+builder.Services.AddDbContextFactory<SysteminformationenDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration["Systeminformationen:ConnectionString"],
         sql => sql.MigrationsAssembly("Weltenretter.Systeminformationen")));
@@ -32,6 +34,7 @@ builder.Services.AddDbContext<SysteminformationenDbContext>(options =>
 // Modul-Services registrieren
 builder.Services.AddSysteminformationenServices();
 builder.Services.AddScoped<IProjektSchluesselProvider, ProjektSchluesselProvider>();
+builder.Services.AddScoped<ISystemankuendigungNotifier, SystemankuendigungNotifier>();
 
 var app = builder.Build();
 
@@ -63,4 +66,5 @@ app.MapControllers();
 app.MapStaticAssets();
 app.UseAntiforgery();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapHub<SystemankuendigungHub>("/hubs/systemankuendigung");
 app.Run();
